@@ -79,7 +79,7 @@ def is_to_the_hole_allowed(delivery_type):
 # Pricing calculation functions
 def calculate_christmas_tree_small_price(roundtrip_mileage):
     """
-    Calculate price for Christmas Tree under 8ft
+    Calculate price for Christmas Tree (7-8ft and smaller)
     Formula: (miles × $0.90) + $25 setup fee
     Minimum: $35
     
@@ -88,7 +88,7 @@ def calculate_christmas_tree_small_price(roundtrip_mileage):
     - 20 miles: $43.00
     - 40 miles: $61.00
     """
-    config = DELIVERY_TYPES["Christmas Tree (under 8ft)"]
+    config = DELIVERY_TYPES["Christmas Tree (7-8ft and smaller)"]
     
     if roundtrip_mileage <= 0:
         return config["minimum"]
@@ -98,7 +98,7 @@ def calculate_christmas_tree_small_price(roundtrip_mileage):
 
 def calculate_christmas_tree_large_price(roundtrip_mileage):
     """
-    Calculate price for Christmas Tree 8ft or larger
+    Calculate price for Christmas Tree (8-9ft and larger)
     Tiered pricing:
     - First 20 miles: $1.30/mile
     - Miles 21+: $0.65/mile
@@ -110,7 +110,7 @@ def calculate_christmas_tree_large_price(roundtrip_mileage):
     - 20 miles: (20 × $1.30) + $58.50 = $84.50
     - 40 miles: (20 × $1.30) + (20 × $0.65) + $58.50 = $97.50
     """
-    config = DELIVERY_TYPES["Christmas Tree (8ft or larger)"]
+    config = DELIVERY_TYPES["Christmas Tree (8-9ft and larger)"]
     
     if roundtrip_mileage <= 0:
         return config["minimum"]

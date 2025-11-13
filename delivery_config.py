@@ -35,14 +35,14 @@ DELIVERY_TYPES = {
         "allows_to_the_hole": True,
         "pricing_type": "standard"
     },
-    "Christmas Tree (under 8ft)": {
+    "Christmas Tree (7-8ft and under)": {
         "minimum": 35,
         "allows_to_the_hole": False,
         "pricing_type": "christmas_tree_small",
         "rate_per_mile": 0.90,
         "setup_fee": 25.00
     },
-    "Christmas Tree (8ft or larger)": {
+    "Christmas Tree (8-9ft or larger)": {
         "minimum": 60,
         "allows_to_the_hole": False,
         "pricing_type": "christmas_tree_large",

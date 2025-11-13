@@ -23,7 +23,10 @@ from delivery_config import (
     TO_THE_HOLE_FEE, 
     ORIGIN_ADDRESSES,
     get_delivery_type_names,
-    is_to_the_hole_allowed
+    is_to_the_hole_allowed,
+    calculate_christmas_tree_small_price,
+    calculate_christmas_tree_large_price,
+    calculate_standard_price
 )
 
 st.set_page_config(page_title="Delivery Quote Calculator", layout="centered")
@@ -85,9 +88,10 @@ def get_distance_miles(origin, destination):
 def calculate_delivery_fee(origin, destination, delivery_type, add_on, customer_city):
     """Calculate delivery fee based on type and distance"""
     config = DELIVERY_TYPES[delivery_type]
+    pricing_type = config.get("pricing_type", "standard")
     
     # Handle Simple delivery type (fixed pricing by city)
-    if delivery_type == "Simple":
+    if pricing_type == "simple":
         city_clean = customer_city.strip().lower()
         if city_clean == "frankfort":
             mileage = get_distance_miles(origin, destination)
@@ -102,19 +106,24 @@ def calculate_delivery_fee(origin, destination, delivery_type, add_on, customer_
     if add_on and not is_to_the_hole_allowed(delivery_type):
         return None, None
     
-    # Calculate mileage-based pricing
+    # Calculate mileage
     mileage = get_distance_miles(origin, destination)
     if mileage is None:
         return None, None
     
     round_trip = mileage * 2
-    base_fee = round(config["rate_per_mile"] * round_trip, 2)
     
-    # Determine minimum based on origin
-    origin_name = [k for k, v in ORIGIN_ADDRESSES.items() if v == origin][0]
-    min_fee = config[f"{origin_name.lower()}_minimum"]
-    
-    final_fee = max(base_fee, min_fee)
+    # Calculate price based on pricing type
+    if pricing_type == "christmas_tree_small":
+        final_fee = calculate_christmas_tree_small_price(round_trip)
+    elif pricing_type == "christmas_tree_large":
+        final_fee = calculate_christmas_tree_large_price(round_trip)
+    elif pricing_type == "standard":
+        # Determine origin name for minimum calculation
+        origin_name = [k for k, v in ORIGIN_ADDRESSES.items() if v == origin][0]
+        final_fee = calculate_standard_price(round_trip, delivery_type, origin_name)
+    else:
+        return None, None
     
     # Add to-the-hole fee if selected
     if add_on:

@@ -26,10 +26,9 @@ v2_wear_per_mile = v2_replacement_cost / v2_lifespan_miles
 v2_fuel_per_mile = cpg_diesel / v2_mpg
 
 # ── Hourly labor rates ────────────────────────────────────────────────────────
-hourly_t = 46.15
-hourly_h = 29.81
-hourly_o = 15.00
-hourly_e = 29.81  # same rate as H
+hourly_t = 46
+hourly_h = 30
+hourly_o = 15
 
 # ── Labor per mile (driving time only) ───────────────────────────────────────
 labor_per_mile_t = hourly_t / avg_mph
@@ -74,8 +73,8 @@ SINGLE_RATE          = _charge(single_cost_per_mile)
 SINGLE_LOAD_COST     = round(single_load_cost * (1 + profit_margin), 2)
 
 # Double: Person H + Person E + Vehicle 2
-double_cost_per_mile = v2_wear_per_mile + v2_fuel_per_mile + labor_per_mile_h + labor_per_mile_e
-double_load_cost     = _load_cost(load_time_double, hourly_h, hourly_e)
+double_cost_per_mile = v2_wear_per_mile + v2_fuel_per_mile + labor_per_mile_h + labor_per_mile_o
+double_load_cost     = _load_cost(load_time_double, hourly_h, hourly_o)
 DOUBLE_RATE          = _charge(double_cost_per_mile)
 DOUBLE_LOAD_COST     = round(double_load_cost * (1 + profit_margin), 2)
 

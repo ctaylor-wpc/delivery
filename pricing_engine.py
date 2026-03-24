@@ -3,8 +3,8 @@
 # The calculated rates feed directly into delivery_config.py.
 
 # ── Fuel ─────────────────────────────────────────────────────────────────────
-cpg_gas = 3.74
-cpg_diesel = 5.03
+cpg_gas = 4
+cpg_diesel = 6
 
 # ── Speed assumption (used to convert hourly labor → per-mile labor) ──────────
 avg_mph = 45
